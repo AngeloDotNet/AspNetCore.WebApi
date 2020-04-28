@@ -18,38 +18,7 @@ namespace AEP_WebApi.Controllers
             this.comuniRepository = comuniRepository;
         }
 
-        /*[HttpGet("carica/comuni")]
-        [ProducesResponseType(400)]
-        [ProducesResponseType(404)]
-        [ProducesResponseType(200, Type= typeof(IEnumerable<ComuniDto>))]
-        public async Task<IActionResult> GetComuni()
-        {
-            var ComuniDto = new List<ComuniDto>();
-            var comuni = await this.comuniRepository.GetComuni();
-
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            if (comuni.Count == 0)
-            {
-                return NotFound(string.Format("Non è stato trovato alcun comune."));
-            }
-            foreach(var comune in comuni)
-            {
-                ComuniDto.Add(new ComuniDto
-                {
-                    IdComune = comune.IdComune,
-                    Comune = comune.Comune,
-                    Cap = comune.Cap,
-                    Provincia = comune.Provincia,
-                    Regione = comune.Regione
-                });
-            }
-            return Ok(ComuniDto);
-        }*/
-
-        [HttpGet("cerca/comune/{comune}", Name="GetComune")]
+        [HttpGet("cerca/comune/{comune}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
         [ProducesResponseType(200, Type= typeof(IEnumerable<ComuniDto>))]
@@ -101,7 +70,7 @@ namespace AEP_WebApi.Controllers
         }
 
         [HttpPost("nuovo")]
-        [ProducesResponseType(201, Type= typeof(Comuni))]
+        [ProducesResponseType(201, Type= typeof(InfoMessage))]
         [ProducesResponseType(400)]
         [ProducesResponseType(422)]
         [ProducesResponseType(500)]
@@ -134,8 +103,7 @@ namespace AEP_WebApi.Controllers
                 ModelState.AddModelError("", $"Non è possibile salvare il comune {comune.Comune} in quanto sono stati trovati errori !");
                 return StatusCode(500, ModelState);
             }
-            return CreatedAtRoute("GetComune", new {comune = comune.Comune}, comune);
-            //return Ok(new InfoMessage(DateTime.Today, $"Comune {comune.Comune} aggiunto con successo !"));
+            return Ok(new InfoMessage(DateTime.Today, $"Comune {comune.Comune} aggiunto con successo !"));
         }
 
         [HttpPost("modifica")]

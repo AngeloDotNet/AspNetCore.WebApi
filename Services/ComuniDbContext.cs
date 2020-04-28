@@ -9,7 +9,6 @@ namespace AEP_WebApi.Services
         {
         }
         public virtual DbSet<Comuni> Comuni { get; set; }
-
         protected override void OnModelCreating (ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Comuni>()

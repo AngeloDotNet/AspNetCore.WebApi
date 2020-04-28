@@ -1,4 +1,6 @@
 using AEP_WebApi.Services;
+using AEP_WebApi.Validators;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -18,7 +20,10 @@ namespace AEP_WebApi
         public IConfiguration Configuration { get; }
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
+                .AddFluentValidation(options => {
+                    options.RegisterValidatorsFromAssemblyContaining<ComuniValidator>();
+                });
 
             var connectionstring = Configuration["ConnectionStrings:ComuniDbConnString"];
             
@@ -30,10 +35,6 @@ namespace AEP_WebApi
             if (env.IsEnvironment("Development"))
             {
                 app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-
             }
 
             app.UseRouting();

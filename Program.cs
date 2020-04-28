@@ -15,7 +15,7 @@ namespace AEP_WebApi
                 .ConfigureWebHostDefaults(webHostBuilder => {
                     webHostBuilder
                         .UseStartup<Startup>();
-                        // Per eseguire il deploy su IIS, decommentare il codice sottostante e lanciare il comando: dotnet publish --configuration Release
+                    /* Per eseguire il deploy su IIS, lanciare il comando: dotnet publish --configuration Release */
                 });
     }
 }
